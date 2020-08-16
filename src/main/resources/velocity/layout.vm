@@ -1,0 +1,49 @@
+#macro(mainLayout)
+<html>
+<head>
+    <title>SEF IMBD</title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/"><img id="logo" src="/img/logo.png" alt="IMBD"></a>
+
+            <ul id="menu">
+                #if($currentUser)
+                    <li>
+                        <form method="post" action="/logout">
+                            <button id="logout">Log Out</button>
+                        </form>
+                    </li>
+                    <li><a href="/account" id="account">My Account</a></li>
+                    <li><a href="/accrequestform">Apply for PCo/Critic</a></li>
+                    <li><a href="/createshow" id="account">Submit Movie/Show</a></li>
+                    #if($currentUserType == "1")
+                    	<li><a href="/unapprovedshows">entries</a></li>
+                    	<li><a href="/requestforms">acc requests</a></li>
+                    #end
+                    #if($currentUserType == "2")
+                        <li><a href="/selectshowedit">Edit Your Shows</a></li>
+                    #end
+                #else
+                    <li><a href="/login" >Log In</a></li>
+                    <li><a href="/signup" > Create Account</a></li>
+                #end
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="content">
+            $bodyContent
+        </div>
+    </main>
+    <footer>
+       Software Engineering Fundamentals Team Project : 
+       Oskar - s3725028 | Connor - s3544152 | Marco - s3782230 | Raymond - s3779722 | Jasper - s3423585
+    </footer>
+</body>
+</html>
+#end

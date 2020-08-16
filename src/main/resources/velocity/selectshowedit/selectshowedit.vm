@@ -1,0 +1,61 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+	#if($currentUserType == "2")
+		<html>
+			<head>
+				<style>
+					input[type=submit] {
+						margin-top: 12px;
+					}
+				</style>
+			</head>
+		<body>
+			<h3>Your Productions</h3>
+			
+			<form method="post">
+				<h4>Approved Shows</h4>
+				#if($noApprovedShow)
+					<p> No approved shows produced by your company </p>
+				#else
+					<table>
+						#foreach( $show in $approvedShows )
+							#set ($isSeries = $show.getIsSeries())
+							#if( $isSeries == 1 )
+								<input type="radio" name="showId" value="$show.getShowId()">
+								<p style="display: inline;"> $show.getShowTitle() ($show.getShowYear()) (TV Series) </p><br>
+							#else
+								<input type="radio" name="showId" value="$show.getShowId()">
+								<p style="display: inline;"> $show.getShowTitle() ($show.getShowYear()) (Movie) </p><br>
+							#end
+						#end
+					</table>
+				#end		
+				
+				<h4>Unapproved Shows</h4>
+				#if($noUnapprovedShow)
+					<p> No unapproved shows produced by your company </p>
+				#else
+					<table>
+						#foreach( $show in $unapprovedShows )
+							#set ($isSeries = $show.getIsSeries())
+							#if( $isSeries == 1 )
+								<input type="radio" name="showId" value="$show.getShowId()">
+								<p style="display: inline;"> $show.getShowTitle() ($show.getShowYear()) (TV Series) </p><br>
+							#else
+								<input type="radio" name="showId" value="$show.getShowId()">
+								<p style="display: inline;"> $show.getShowTitle() ($show.getShowYear()) (Movie) </p><br>
+							#end
+						#end
+					</table>
+				#end
+				
+				#if (!($noApprovedShow && $noUnapprovedShow))
+					<input name="submit" type="submit" value="Edit show">
+				#end
+			</form>
+		</body>
+		</html>		
+	#else
+		<h1 class = "defaultHeading">ERROR - Sorry, you need to be a production company to access this page.</h1>
+	#end
+#end

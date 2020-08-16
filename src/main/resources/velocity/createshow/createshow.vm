@@ -1,0 +1,47 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+	#if($currentUser)
+		<h1>Add a new Show or Movie</h1>
+		#if($success)
+			<h3> Your new show / movie was successfully submitted. An admin will review your submission shortly. </h3>
+		#end
+		
+		<form class = "form" id="createshowForm" method="post">
+		    <select name = "type">
+			  <option name = "isMovie" value="movie" selected>Movie</option>
+			  <option name = "isShow" value="show">Show</option>
+			</select>
+		    
+		    <label>Title</label>
+		    <input type="text" name="title" placeholder="Title of Show / Movie" value="" required>
+		    
+		    <label>Year</label>
+		    <input type="text" name="year" placeholder="Year of Release (yyyy)" value="" required>
+		    
+		    <label>Genre</label>
+		    <input type="text" name="genre" placeholder="Genre" value="" required>
+		    
+		    <label>Length</label>
+		    <input type="text" name="length" placeholder="Length (minutes)" value="" required>
+		    
+		    <select name = "productionCompany">
+			  <option value="1" selected>Universal Pictures</option>
+			  <option value="2">Paramount Pictures</option>
+			  <option value="3">20th Century Fox</option>
+			  <option value="4">Warner Bros.</option>
+			  <option value="5">DreamWorks Pictures</option>
+			  <option value="6">Metro-Goldwyn-Meyer</option>
+			  <option value="7">Miramax</option>
+			  <option value="8">Columbia Pictures</option>
+			  <option value="9">Walt Disney Pictures</option>
+			  <option value="10">Sony Pictures</option>
+			  <option value="11">New Line Cinema</option>
+			</select>    
+			
+		    <input type="submit" value="Submit new Show / Movie">
+		</form>
+	#else
+		<h1 class = "defaultHeading">ERROR - Sorry, you need to be logged in to add a new entry for a show or movie.</h1>
+		<label> Dont have an account? Click <a href="/signup" > Create Account</a></label>
+	#end
+#end

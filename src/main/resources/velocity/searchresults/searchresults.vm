@@ -1,0 +1,57 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+<html>
+<head>
+	<style>
+		.button {
+			background-color: #F5F5F5;
+			border: 1px solid black;
+			color: black;
+			padding: 5px 10px;
+			width: 500px;
+			text-align: left;
+			text-decoration: none;
+			display: block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	#if( $noResult )
+		<p>No results found for "$searchTerm"
+		#stop
+	#end
+	
+	<p>Results for "$searchTerm"</p>
+	
+	#if( $searchType == "show" )
+		<p>Titles</p>
+		<table>
+			#foreach( $show in $shows )
+				#set ($isSeries = $show.getIsSeries())
+				#if( $isSeries == 1 )
+					<form method="post">
+						<input type="submit" class="button" name="clicked" value="$show.getShowTitle() ($show.getShowYear()) (TV Series)">
+					</form>
+				#else
+					<form method="post">
+						<input type="submit" class="button" name="clicked" value="$show.getShowTitle() ($show.getShowYear()) (Movie)">
+					</form>
+				#end
+			#end
+		</table>	
+	#elseif( $searchType == "person" )
+		<p>Names</p>
+		<table>
+			#foreach( $person in $people )
+				<form method="post">
+					<input type="submit" class="button" name="clicked" value="$person.getFullName() ($person.getRole())">
+				</form>
+			#end
+		</table>
+	#end
+</body>
+</html>
+#end

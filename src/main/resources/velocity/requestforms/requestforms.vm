@@ -1,0 +1,39 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+	#if($currentUserType == "1")
+		<html>
+			<head>
+				<style>
+					input[type=submit] {
+						margin-top: 12px;
+					}
+				</style>
+			</head>
+		<body>
+			<h3>List of Request Forms</h3>
+				#if($noResult)
+				<p> No account request forms pending approval. </p>
+				#end
+			<table>
+				<form method="post">
+				#foreach($requestForm in $requestForms )
+					<input type="checkbox" name="form" value="$requestForm.getUserID()">
+					<p> Account: $requestForm.getUserID() <p>
+					<p> Requested Account Type: $requestForm.getRequestedType() </p>
+					<p> Reason: </p>
+					<p> $requestForm.getReason() </p>
+					<br>
+				#end
+					#if(!$noResult)
+						<input name="submit" type="submit" value="Approve">
+						<span>&emsp;&emsp;&emsp;</span>
+						<input name="submit" type="submit" value="Delete">
+					#end
+				</form>
+			</table>
+		</body>
+		</html>
+	#else
+		<h1 class = "defaultHeading">ERROR - Sorry, you need to be an Administrator to access this page.</h1>
+	#end
+#end

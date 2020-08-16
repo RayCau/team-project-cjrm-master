@@ -1,0 +1,71 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+	#if($currentUserType == "2")
+		#if($show || $success)
+			<html>
+				<head>
+					<style>
+						input[type=submit] {
+							margin-top: 12px;
+						}
+					</style>
+				</head>
+			<body>
+				<h1>Edit Show</h1>
+				#if($success)
+					<h3> Your edit was successfully submitted. </h3>
+				#elseif($fail)
+					<h3> Your edit was unsuccessful. Please try again. </h3>
+				#end
+				
+				<form class = "form" id="editshowForm" method="post">
+					<select name = "type">
+					#if ($show.getIsSeries() == 1)
+						<option name = "isMovie" value="movie">Movie</option>
+						<option name = "isShow" value="show" selected>Show</option>
+					#else ($show.getIsSeries() == 1)
+						<option name = "isMovie" value="movie" selected>Movie</option>
+						<option name = "isShow" value="show">Show</option>
+					#end
+					</select>
+					
+					<label>Title</label>
+					<input type="text" name="title" maxlength="45" value="$show.getShowTitle()" required>
+					
+					<label>Year of Release (yyyy)</label>
+					<input type="text" name="year" value="$show.getShowYear()" required>
+					
+					<label>Genre</label>
+					<input type="text" name="genre" value="$show.getShowGenre()" required>
+					
+					<label>Length (minutes)</label>
+					<input type="text" name="length" value="$show.getShowLength()" required>
+					
+					<label> Production company: </label>
+					<label> $showProcoName </label>
+					<select name = "productionCompany" required>
+						<option value=""></option>
+						<option value="1">Universal Pictures</option>
+						<option value="2">Paramount Pictures</option>
+						<option value="3">20th Century Fox</option>
+						<option value="4">Warner Bros.</option>
+					    <option value="5">DreamWorks Pictures</option>
+					    <option value="6">Metro-Goldwyn-Meyer</option>
+					    <option value="7">Miramax</option>
+					    <option value="8">Columbia Pictures</option>
+					    <option value="9">Walt Disney Pictures</option>
+					    <option value="10">Sony Pictures</option>
+					    <option value="11">New Line Cinema</option>
+					</select>
+					
+					<input type="submit" value="Submit edit(s)">
+				</form>
+			</body>
+			</html>
+		#else
+			<h1 class = "defaultHeading">ERROR - Please visit "Edit Your Shows" to select a show to edit first.</h1>
+		#end
+	#else
+		<h1 class = "defaultHeading">ERROR - Sorry, you need to be a production company to access this page.</h1>
+	#end
+#end

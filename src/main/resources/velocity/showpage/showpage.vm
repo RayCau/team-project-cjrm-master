@@ -1,0 +1,117 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<style>
+.image {
+  height:200px;
+  width: 100%;
+  padding: 20px;
+  background-color: #aaa;
+}
+
+#rating{
+  font-weight: bold;
+}
+#description{
+  border: 1px solid grey;
+  padding: 20px;
+}
+
+#creator{
+  font-weight: bold;
+}
+
+#stars{
+  font-weight: bold;
+}
+
+#reviews{
+  font-size: 12px;
+}
+
+#attributes {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#attributes td, #attributes th {
+  border: 1px solid lightgrey;
+  border-top: white;
+  border-bottom: white;
+  padding: 8px;
+}
+</style>
+
+<html>
+<body>
+	<div>
+		<div>
+			#if($id)
+		    <h1>$title</h1>
+			<p id="rating">Average Rating: $rating </p>
+			
+			<table id = "attributes">
+  				<tr>
+    				<th><a>Advising (e.g. MA 15+)</a></th>
+   					<th><a>Duration: $length</a></th>
+    				<th><a>Type (e.g. TV Series)</a></th>
+    				<th><a>Date: $year</a></th>
+    				<th><a>Genre: $genre</a></th>
+  				</tr>
+			
+			</table>
+			<br>
+			
+			<div class="image">Images</div>
+			<br>
+			<div id = "description">
+				<p> Synopsis: 'Placeholder for information on the show/movie.' </p>
+				<p>	<a id = "creator"> Creator: </a> 'Creater Name placeholder' </p>
+				<p>	<a id = "stars"> Stars: </a> 'List of major cast' | See full cast & crew >> </p>
+				
+				#if($currentUser)
+				<form method = "post">
+					<label for = "rating"></label>
+					<p>Your Rating:</p>
+					<select id="rating" name="rating">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3" selected>3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+					<br>
+					<label for = "reviewText"></label>
+					<p>Enter Review: </p>
+					<br>
+					<textarea id="reviewText" name = "reviewText" rows="3" cols="80" style="resize: none;">
+					</textarea><br><br>
+					<input type="submit" value="Submit">
+				</form>
+				#else
+				<p> You must log-in to be able to post a review!</p>
+				#end
+			</div> 
+			<h2>User Reviews</h2>
+				#foreach ($review in $reviews)
+					<div>
+						<hr>
+						<a>User Rating: $review.getRating()</a>
+						#if($review.getReview().trim().isEmpty() == false)
+							<p>User Review: $review.getReview()</p>
+						#else
+							<p> No Review Written </p>
+						#end
+					</div> 
+				#end
+		    #else
+		    	<h1> Please do a search first. <h1>
+		    #end
+	
+		</div>
+	</div>
+	
+</body>
+</html>
+
+#end

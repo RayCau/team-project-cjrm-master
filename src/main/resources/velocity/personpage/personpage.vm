@@ -1,0 +1,19 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<html>
+	#if($fullname)
+	<body>
+		<h1>$fullname</h2>
+		<div>
+			<p><a>Full Name: </a> $fullname</p>
+			<p><a>Role: </a> $role</p>
+			<p><a>Biography: </a> $bio</p>
+			<p><a>Birthdate: </a> $birthdate</p>
+		</div>
+	#else
+	   	<h1> Please do a search first. <h1>
+	#end
+	</body>
+</html>
+#end

@@ -1,0 +1,41 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+	#if($currentUserType == "1")
+		<html>
+			<head>
+				<style>
+					input[type=submit] {
+						margin-top: 12px;
+					}
+				</style>
+			</head>
+		<body>
+			<h3>List of Unapproved Movies & TV Series</h3>
+				#if($noResult)
+				<p> No shows currently unapproved </p>
+				#end
+			<table>
+				<form method="post">
+				#foreach( $show in $shows )
+					#set ($isSeries = $show.getIsSeries())
+					#if( $isSeries == 1 )
+						<input type="checkbox" name="show" value="$show.getShowId()">
+						<p style="display: inline;"> $show.getShowTitle() ($show.getShowYear()) (TV Series) </p><br>
+					#else
+						<input type="checkbox" name="show" value="$show.getShowId()">
+						<p style="display: inline;"> $show.getShowTitle() ($show.getShowYear()) (Movie) </p><br>
+					#end
+				#end
+					#if(!$noResult)
+						<input name="submit" type="submit" value="Approve">
+						<span>&emsp;&emsp;&emsp;</span>
+						<input name="submit" type="submit" value="Delete">
+					#end
+				</form>
+			</table>
+		</body>
+		</html>
+	#else
+		<h1 class = "defaultHeading">ERROR - Sorry, you need to be an Administrator to access this page.</h1>
+	#end
+#end
